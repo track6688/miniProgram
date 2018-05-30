@@ -1,0 +1,116 @@
+<style lang="less">
+.userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10rpx;
+    margin-top: 10rpx;
+}
+
+.userinfo-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+}
+
+.userinfo-nickname {
+    color: #aaa;
+}
+
+.baseInfo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10rpx;
+    margin-top: 10rpx;
+}
+</style>
+
+
+<template>
+<view class="page__bd">
+  <view class="userinfo" @tap="handleViewTap">
+    <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover" />
+    <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+  </view>
+
+  <panel class="baseInfo">
+    <view class="title" slot="title">基本信息</view>
+    <text class="info">工号：{{number}}</text>
+    <text class="info">姓名：{{name}}</text>
+    <text class="info">岗位：{{post}}</text>
+  </panel>
+
+  <view class="weui-cells weui-cells_after-title">
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">历史记录</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">商品管理</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+  </view>
+
+</view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import {
+  connect
+} from 'wepy-redux'
+import Panel from '@/components/panel' // alias example
+@connect({
+  num(state) {
+    return state.counter.num
+  },
+  asyncNum(state) {
+    return state.counter.asyncNum
+  },
+  sumNum(state) {
+    return state.counter.num + state.counter.asyncNum
+  }
+})
+
+export default class UserCenter extends wepy.page {
+  config = {
+    navigationBarTitleText: '用户中心'
+  }
+  components = {
+    panel: Panel
+  }
+
+  data = {
+    userInfo: {
+      nickName: '加载中...'
+    },
+    number: '123456',
+    name: '张三',
+    post: '特级业务员'
+  }
+
+  computed = {
+    now() {
+      return +new Date()
+    }
+  }
+
+  methods = {
+
+  }
+
+  events = {
+
+  }
+
+  onLoad() {
+    let self = this
+    this.$parent.getUserInfo(function(userInfo) {
+      if (userInfo) {
+        self.userInfo = userInfo
+      }
+      self.$apply()
+    })
+  }
+}
+</script>
