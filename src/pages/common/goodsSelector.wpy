@@ -20,26 +20,13 @@
     <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" @tap="hideInput">取消</view>
   </view>
   <view class="weui-cells searchbar-result" wx:if="{{inputVal.length > 0}}">
-    <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-      <view class="weui-cell__bd">
-        <view>实时搜索文本</view>
-      </view>
-    </navigator>
-    <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-      <view class="weui-cell__bd">
-        <view>实时搜索文本</view>
-      </view>
-    </navigator>
-    <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-      <view class="weui-cell__bd">
-        <view>实时搜索文本</view>
-      </view>
-    </navigator>
-    <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-      <view class="weui-cell__bd">
-        <view>实时搜索文本</view>
-      </view>
-    </navigator>
+    <repeat for="{{resultArray}}" key="index" index="index" item="item">
+      <navigator url="" class="weui-cell" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">
+          <view>{{item.name}}</view>
+        </view>
+      </navigator>
+    </repeat>
   </view>
 </view>
 </template>
@@ -70,7 +57,23 @@ export default class UserSelector extends wepy.page {
 
   data = {
     inputShowed: false,
-    inputVal: ''
+    inputVal: '',
+    resultArray: [{
+      id: 123,
+      name: 'Apple'
+    }, {
+      id: 124,
+      name: 'Banana'
+    }, {
+      id: 125,
+      name: 'Organge'
+    }, {
+      id: 126,
+      name: 'BBB'
+    }, {
+      id: 127,
+      name: 'Pike'
+    }]
   }
 
   computed = {
