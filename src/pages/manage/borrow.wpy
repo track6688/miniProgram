@@ -18,6 +18,9 @@
       <view class="weui-cell__bd">
         <input class="weui-input" placeholder="请输入货物名称" />
       </view>
+      <view class="weui-cell__ft">
+          <icon type="search" size="23" color="#333333" ></icon>
+      </view>
     </view>
     <view class="weui-cell weui-cell_input">
       <view class="weui-cell__hd">
@@ -27,6 +30,28 @@
         <input class="weui-input" placeholder="请输入借货的数量" />
       </view>
     </view>
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">归还时间</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker mode="date" value="{{date}}" start="2015-09-01" end="2099-09-01" bindchange="bindDateChange">
+          <view class="weui-input">{{date}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">负责人</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker mode="multiSelector" range="{{userArray}}" range-key="name"  bindcolumnchange="binUserSelectorColumnchange">
+          <view class="weui-input">{{user.name}}</view>
+        </picker>
+      </view>
+    </view>
+
 
     <checkbox-group bindchange="bindAgreeChange">
       <label class="weui-agree" for="weuiAgree">
@@ -75,7 +100,49 @@ export default class Borrow extends wepy.page {
   data = {
     userInfo: {
       nickName: '加载中...'
+    },
+    date: '2018-05-30',
+    userArray: [
+      [{
+        id: 123,
+        name: '清城'
+      }, {
+        id: 124,
+        name: '清新'
+      }, {
+        id: 125,
+        name: '佛冈'
+      }],
+      [{
+        id: 11,
+        name: '管理员'
+      }, {
+        id: 12,
+        name: '业务员'
+      }, {
+        id: 13,
+        name: '打杂'
+      }],
+      [{
+        id: 1,
+        name: '张三'
+      }, {
+        id: 2,
+        name: '李四'
+      }, {
+        id: 3,
+        name: '王五'
+      }, {
+        id: 4,
+        name: '赵六'
+      }]
+    ],
+
+    user: {
+      id: 123,
+      name: 'XX'
     }
+
   }
 
   computed = {
@@ -85,7 +152,25 @@ export default class Borrow extends wepy.page {
   }
 
   methods = {
+    bindDateChange: function(e) {
+      this.date = e.detail.value
+    },
+    // 列选择发生改变时触发
+    binUserSelectorColumnchange: function(e) {
+      console.log(e.detail)
 
+      let column = e.detail.column
+      let value = e.detail.value
+
+      if (column === 0) {
+        console.log('选择了区域' + this.userArray[column][value].name)
+      } else if (column === 1) {
+        console.log('选择了部门' + this.userArray[column][value].name)
+      } else if (column === 2) {
+        console.log('选择员工' + this.userArray[column][value].name)
+        this.user = this.userArray[column][value]
+      }
+    }
   }
 
   events = {

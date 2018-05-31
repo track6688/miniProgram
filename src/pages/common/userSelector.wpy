@@ -1,0 +1,58 @@
+<style lang="less">
+
+</style>
+<template>
+
+</template>
+
+<script>
+import wepy from 'wepy'
+import {
+  connect
+} from 'wepy-redux'
+
+@connect({
+  num(state) {
+    return state.counter.num
+  },
+  asyncNum(state) {
+    return state.counter.asyncNum
+  },
+  sumNum(state) {
+    return state.counter.num + state.counter.asyncNum
+  }
+})
+
+export default class UserSelector extends wepy.page {
+  config = {
+    navigationBarTitleText: '选择员工'
+  }
+  components = {}
+
+  data = {
+    scrollTop: 100,
+    windowHeight: 0,
+    list: {},
+    // 一级分类数据
+    rootcateList: {},
+    // 二级三级分类数据
+    childcateList: {}
+  }
+
+  computed = {
+
+  }
+
+  methods = {
+    
+  }
+
+  events = {
+
+  }
+
+  onLoad() {
+
+  }
+}
+</script>

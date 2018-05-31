@@ -75,7 +75,11 @@ export default class extends wepy.app {
       'pages/news/news',
 
       /* 用户中心 */
-      'pages/user/userCenter'
+      'pages/user/userCenter',
+
+      /* 通用页面 */
+      'pages/common/userSelector',
+      'pages/common/goodsSelector'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -99,10 +103,14 @@ export default class extends wepy.app {
         selectedIconPath: './images/tabbars/borrowBar.png',
         text: '借货'
       }, {
-        pagePath: 'pages/manage/giveBack',
+        /* pagePath: 'pages/manage/giveBack',
         iconPath: './images/tabbars/giveBackBar.png',
         selectedIconPath: './images/tabbars/giveBackBar.png',
-        text: '还货'
+        text: '还货' */
+        pagePath: 'pages/common/goodsSelector',
+        iconPath: './images/tabbars/giveBackBar.png',
+        selectedIconPath: './images/tabbars/giveBackBar.png',
+        text: '测试页面'
       }, {
         pagePath: 'pages/manage/sell',
         iconPath: './images/tabbars/sellBar.png',
