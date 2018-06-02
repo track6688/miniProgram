@@ -1,5 +1,62 @@
 <style lang="less">
-
+.classify {
+    display: flex;
+    position: relative;
+    .classify_catetory {
+        width: 200rpx;
+        position: relative;
+        z-index: 1;
+        .name {
+            text-align: center;
+            height: 100rpx;
+            line-height: 100rpx;
+            font-size: 28rpx;
+            color: #666;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .active {
+            border-left: 6rpx solid #ff6a3c;
+            background: #fff;
+            color: #ff6a3c;
+        }
+    }
+    .classify_detail {
+        position: relative;
+        z-index: 999;
+        // margin-left: -15rpx;
+        background: #fff;
+        padding: 15px 10px 10px 30px;
+        .classify_item {}
+        .title {
+            font-size: 30rpx;
+            color: #333;
+            margin-left: 25rpx;
+        }
+        .children {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 20rpx 0;
+        }
+        .child_image {
+            width: 60px;
+            height: 60px;
+        }
+        .child_name {
+            font-size: 26rpx;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 170rpx;
+        }
+        .children_item {
+            height: 200rpx;
+            width: 170rpx;
+            text-align: center;
+        }
+    }
 </style>
 <template>
 <view class="page__bd">
@@ -28,6 +85,28 @@
       </navigator>
     </repeat>
   </view>
+
+  <view class="classify" style="height:{{windowHeight-50}}px">
+    <scroll-view class="classify_catetory" scroll-y scroll-with-animation="true" style="height:{{windowHeight-50}}px">
+      <repeat for="{{rootcateList}}" key="index" index="index" item="item">
+        <view class="name {{item.active ? 'active' : ''}}" @tap="changeCate" data-code="{{item.code}}">
+          {{item.name}}
+        </view>
+      </repeat>
+    </scroll-view>
+    <scroll-view class="classify_detail" scroll-y scroll-with-animation="true" style="height:{{windowHeight-50}}px">
+      <view class="children">
+        <repeat for="{{childcateList}}" key="index" index="index" item="item">
+          <navigator hover-class="none" class="children_item" url="/pages/search?cateCode={{item.secondCategory.code}}&title={{item.secondCategory.name}}">
+            <image class="child_image" src="{{item.secondCategory.thumLogo}}"></image>
+            <view class="child_name">{{item.secondCategory.name}}</view>
+          </navigator>
+        </repeat>
+      </view>
+    </scroll-view>
+  </view>
+
+
 </view>
 </template>
 
@@ -73,7 +152,22 @@ export default class UserSelector extends wepy.page {
     }, {
       id: 127,
       name: 'Pike'
-    }]
+    }],
+    scrollTop: 100,
+    windowHeight: 0,
+    list: {},
+    //一级分类数据
+    rootcateList: [{
+      active: true,
+      code: '123',
+      name: '除草剂'
+    }, {
+      active: true,
+      code: '124',
+      name: '除草剂'
+    }],
+    //二级三级分类数据
+    childcateList: {}
   }
 
   computed = {
